@@ -1,0 +1,31 @@
+{% extends "padre.html" %}
+
+{% load static %}
+        
+{% block contenido %}
+        <header class="masthead">
+            <div class="container position-relative">
+                <h2>Iniciar sesión</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Iniciar Sesión</button>
+                </form>    
+               
+                {% if error_message %}
+                    <p>{{ error_message }}</p>
+                {% endif %}
+                <a type="submit" href="{% url 'registro' %}"><button>Registrarse</button></a>
+            </div>
+        </header>
+        
+{% endblock %}
+      
+       
+
+    
+
+
+
+
+

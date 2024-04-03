@@ -1,0 +1,95 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+   {% comment %} Tarjetas {% endcomment %}
+    <main class="contenedor-tarjetas">
+        <div class="container-lg">
+            <div class="row align-items-start">
+                
+                <div class="card w-25 mb-3">
+                    <img src="{% static 'AppCoder/assets/img/testimonials-1.jpg' %}"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Fernanda Lopez</h5>
+                        <p class="card-text">El mejor curso gracias</p>
+                        <textarea name="mensaje" id="mensaje" cols="25" rows="1"></textarea>
+                        <a class="btn btn-info" href="">Enviar</a>
+                        
+                    </div>
+                </div>    
+            
+                <div class="card w-25 mb-3">
+                    <img src="{% static 'AppCoder/assets/img/testimonials-2.jpg' %}"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Ramon Perez</h5>
+                        <p class="card-text">Me gusto mucho el curso</p>
+                        <textarea name="mensaje" id="mensaje" cols="25" rows="1"></textarea>
+                        <a class="btn btn-info" href="">Enviar</a>
+                    </div>
+                </div>
+            
+                <div class="card w-25 mb-3">
+                    <img src="{% static 'AppCoder/assets/img/testimonials-3.jpg' %}"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Monica Torres</h5>
+                        <p class="card-text">Una gran oportunidad</p>
+                        <textarea name="mensaje" id="mensaje" cols="25" rows="1"></textarea>
+                        <a class="btn btn-info" href="">Enviar</a>
+                    </div>
+                </div>    
+                    
+                <div class="card w-25 mb-3">
+                    <img src="{% static 'AppCoder/assets/img/testimonials-4.jpg' %}"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Elioth Mendez</h5>
+                        <p class="card-text">Supero mis espectativas</p>
+                        <textarea name="mensaje" id="mensaje" cols="25" rows="1"></textarea>
+                        <a class="btn btn-info" href="">Enviar</a>
+                    </div>
+                </div>   
+
+            </div>  
+        </div>
+    </main>
+
+    {% comment %} formulario {% endcomment %}{% comment %} Tarjetas {% endcomment %}
+    <div class="container position-relative">
+        <h1>Ingreso de Datos de Alumnos</h1>
+        <form action="{% url 'alta_alumnos' %}" method="POST">
+            {% csrf_token %}
+            <div class="campo">
+                <p>Nombre:</p>
+                <input type="text" name="nombre" required>
+            </div>
+
+            <div class="container">
+                <div class="campo">
+                    <p>Edad</p>
+                    <input type="number" name="edad" required>
+                </div>
+                <div class="campo">
+                    <p>Email</p>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="campo">
+                    <button type="submit" class="btn btn-success btn-sm">Guardar Alumno</button>
+                    <a href="{% url 'ver_alumnos' %}" class="btn btn-info btn-sm">Alumnos ok</a>
+                    
+                </div>
+            </div>                        
+        </form>
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

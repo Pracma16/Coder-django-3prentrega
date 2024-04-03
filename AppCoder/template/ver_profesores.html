@@ -1,0 +1,35 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block contenido %}
+
+    {% comment %} Tabla de datos {% endcomment %}
+    <div class="container">
+        <div class="campo">
+            <h1>PROFESORES</h1>
+        </div>
+        <a href="{% url 'alta_profesores' %}" class="btn btn-info btn-sm">Agregar profesor</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>nombre</th>
+                    <th>asignatura</th>
+                    <th>email</th>
+                </tr>            
+            </thead>
+            <tbody>
+                {% for profesor in profesores %}
+                <tr>
+                    <td> {{profesor.id}}</td>
+                    <td>{{profesor.nombre}}</td>
+                    <td>{{profesor.asignatura}}</td>
+                    <td>{{profesor.email}}</td>
+                </tr>
+                {% endfor %}  
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
