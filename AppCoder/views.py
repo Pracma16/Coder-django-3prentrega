@@ -4,11 +4,8 @@ from django.http import HttpResponse
 from django.template import loader
 from AppCoder.forms import *
 from django.urls import reverse
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
 from django.contrib.auth import login, authenticate, logout #pendiente hacer el logout
-from django.contrib.auth.hashers import make_password
-
 
 #Alumnos
    
@@ -54,7 +51,6 @@ def profesor_formulario(request):
 #Inicio
 def inicio(request):
     return render(request, "padre.html")
-
 
 #Cursos
 
@@ -122,35 +118,51 @@ def editar_curso(request , id):
     return render( request , "editar_curso.html" , {"mi_formulario": mi_formulario , "curso":curso})
 
 
-def registro_usuario(request):
-    if request.method == 'POST':
-        form = RegistroForm(request.POST)
+# def register(request):
+#     if request.method == 'POST':
+#         form = RegistroForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('Login')  
+#     else:
+#         form = UserCreationForm()
+#     return render(request, 'registro.html', {'form': form})
+
+
+def register(request):
+    
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+
         if form.is_valid():
-            contraseña = form.cleaned_data['contraseña']
-            contraseña_hasheada = make_password(contraseña)
             form.save()
-            return redirect('login')  
+            return HttpResponse("Usuario creado")
+
     else:
-        form = RegistroForm()
-    return render(request, 'registro.html', {'form': form})
+        form = UserCreationForm()
+    return render(request , "registro.html" , {"form":form})
 
 
-def iniciar_sesion(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(request, request.POST)
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            usuario = form.cleaned_data.get("username")
+            contra = form.cleaned_data.get("password")
+            user = authenticate(username=usuario , password=contra)
             if user is not None:
-                login(request, user)
-                return redirect('padre')              
-            
-    else:
-        form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+                login(request , user )
+                return render( request , "inicio.html" , {"mensaje":f"Bienvenido/a {usuario}", "ususario":usuario})
+            else:
+                return HttpResponse(f"Usuario no encontrado")
+        else:
+            return HttpResponse(f"FORM INCORRECTO {form}")
 
-@login_required
-def padre(request):
-    return render(request, 'padre.html')
-        
+    form = AuthenticationForm()
+    return render( request , "login.html" , {"form":form})
+
+
+
+def nosotros(request):
+    return render(request, "nosotros.html" )
+

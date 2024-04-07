@@ -77,6 +77,8 @@
   --bs-link-hover-color: #0a58ca;
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fff3cd;
+  --azul-marino: #71d0d7;
+  --fondo-marino: #1d242b;
 }
 
 *,
@@ -102,6 +104,9 @@ body {
   background-image: radial-gradient(circle at 49.17% 45.29%, #bec0c0 0, #d7dde4 50%, #858f94e3 100%);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  display: grid;
+  min-height: 100vh;
+  grid-template-rows: auto 1fr auto;
 }
 
 hr {
@@ -10852,10 +10857,10 @@ textarea.form-control-lg {
 header.masthead {
   position: relative;
   background-color: #343a40;
-  background: url("../assets/img/fondo-blanco1.png") no-repeat center center;
+  background: url("../assets/img/bg-Banner.png") no-repeat center center;
   background-size: cover;
-  padding-top: 8rem;
-  padding-bottom: 8rem;
+  padding-top: 20rem;
+  padding-bottom: 12rem;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
 }
 header.masthead:before {
@@ -10926,8 +10931,8 @@ header.masthead h1, header.masthead .h1 {
 }
 
 footer.footer {
-  padding-top: 4rem;
-  padding-bottom: 4rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 
@@ -10953,7 +10958,19 @@ footer.footer {
   box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.5);
 }
 .menu_principal:hover{
-  background: var(--bs-gray-500);
-  color: var(--bs-body-bg);
+ 
+  background:  var(--fondo-marino);
+  color: var(--azul-marino);
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 3.5);
+}
+
+.letra-formulario{
+  color: var(--bs-white);
+}
+
+.botones_act{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 }

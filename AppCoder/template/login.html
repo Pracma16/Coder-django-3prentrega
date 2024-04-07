@@ -4,18 +4,17 @@
         
 {% block contenido %}
         <header class="masthead">
-            <div class="container position-relative">
-                <h2>Iniciar sesión</h2>
-                <form method="post">
+            
+            <div class="container position-relative letra-formulario">
+                <form action="" method="post">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <button type="submit">Iniciar Sesión</button>
-                </form>    
-               
-                {% if error_message %}
-                    <p>{{ error_message }}</p>
-                {% endif %}
-                <a type="submit" href="{% url 'registro' %}"><button>Registrarse</button></a>
+                    <div class="campo">
+                        <h2>Iniciar sesión</h2>
+                        {{ form.as_p }}
+                        <button type="submit">Iniciar Sesión</button>
+                    </div>
+                </form>  
+                 
             </div>
         </header>
         

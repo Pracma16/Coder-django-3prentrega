@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>FitFusion</title>
+        <title>Cursagia</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -25,21 +25,20 @@
                 <a class="menu_principal" href="{% url 'ver_cursos' %}">Cursos</a>
                 <a class="menu_principal" href="{% url 'alta_profesores' %}">Profesores</a>
                 <a class="menu_principal" href="{% url 'alta_alumnos' %}">Alumnos</a>
-                <a class="menu_principal" href="{% url 'registro' %}">Registrarse</a>
-                <a class="menu_principal" href="{% url 'login' %}">Iniciar sesión</a>
+                <a class="menu_principal" href="{% url 'Register' %}">Registrarse</a>
+                <a class="menu_principal" href="{% url 'Login' %}">Iniciar sesión</a>
             </div>
         </nav>
-        <!-- Masthead-->
+        
+        {% block contenido %}
+        
         <header class="masthead">
             <div class="container position-relative">
-                <h1 class="text-center" style="color:white">App de CoderHouse</h1>
+                <h1 class="text-center" style="color:white">Cursagia</h1>
+                <h2 class="text-center" style="color:white">Academia de Cursos Virtuales </h2>
+                <p class="campo" style="color:white">Patrocinio de Coderhouse</p>
             </div>
         </header>
-        
-        <!--Mi contenido-->
-
-        {% block contenido %}
-
         {% endblock %}
     
         <!--Fin de contenido-->
@@ -50,7 +49,7 @@
                 <div class="row">
                     <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
                         <ul class="list-inline mb-2">
-                            <li class="list-inline-item"><a href="#!">Nosotros</a></li>
+                            <li class="list-inline-item"><a href="{% url 'Nosotros' %}">Nosotros</a></li>
                             <li class="list-inline-item">⋅</li>
                             <li class="list-inline-item"><a href="#!">Contacto</a></li>
                             <li class="list-inline-item">⋅</li>

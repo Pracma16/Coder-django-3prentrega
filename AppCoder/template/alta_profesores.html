@@ -73,11 +73,17 @@
                 <div class="campo">
                     <p>Email</p>
                     <input type="email" name="email" required>
-                </div>
-                <div class="campo">
-                    <button type="submit" class="btn btn-success btn-sm">Guardar Profesor</button>
-                    <a href="{% url 'ver_profesores' %}" class="btn btn-info btn-sm">Profesores ok</a>
-                </div>
+                </div><br>
+                <div class="botones_act">
+                    <div>
+                        <button type="submit" class="btn btn-success btn-sm">Guardar Profesor</button><br>
+                    </div>
+                    
+                    <div>
+                            <a href="{% url 'ver_profesores' %}" class="btn btn-info btn-sm">Profesores ok</a>
+                    </div>
+                    
+                </div><br>
             </div>                        
         </form>
     </div>

@@ -13,9 +13,9 @@ urlpatterns = [
     path("elimina_curso/<int:id>" , views.elimina_curso , name="elimina_curso"),
     path("editar_curso/<int:id>" ,views.editar_curso , name="editar_curso"),
     
-    path('registro/', views.registro_usuario, name='registro'),
-    path('login/', views.iniciar_sesion, name='login'),
-    path('padre/', views.padre, name='padre'),
+    path('register', views.register, name='Register'),
+    path('login', views.login_request, name='Login'),
+    #path('padre/', views.padre, name='padre'),
     
     path('alta_alumnos/', views.alumno_formulario, name='alta_alumnos'),
     path('ver_alumnos', views.ver_alumnos, name='ver_alumnos'), 
@@ -23,6 +23,8 @@ urlpatterns = [
     
     path('alta_profesores/', views.profesor_formulario, name='alta_profesores'),
     path("ver_profesores/", views.ver_profesores , name="ver_profesores" ),
+    
+    path("nosostros", views.nosotros, name="Nosotros"),
 ]
 
 
