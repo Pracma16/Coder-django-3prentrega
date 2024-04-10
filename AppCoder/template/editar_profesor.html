@@ -1,0 +1,31 @@
+{% extends "padre.html" %}
+
+{% load static %}
+        
+{% block contenido %}
+    <header class="masthead">
+        <div class="container position-relative letra-formulario">
+            <h2>Editar profesor</h2>
+            <form action="{% url 'editar_profesor' profesor.id %}" method="POST">
+                <div class="campo">
+                    {% csrf_token %}
+                    <p>Nombre</p>
+                    {{su_formulario.nombre}}
+                </div>
+                <div class="campo">    
+                    <p>asignatura</p>
+                    {{su_formulario.asignatura}}
+                </div> 
+                <div class="campo">    
+                    <p>Email</p>
+                    {{su_formulario.email}}
+                </div> 
+                <div class="campo">       
+                    <button type="submit" class="btn btn-info btn-sm">Aplicar</button>
+                </div>
+            </form>
+        </div>
+    </header>
+{% endblock %}
+      
+       

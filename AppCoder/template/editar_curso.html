@@ -4,7 +4,7 @@
         
 {% block contenido %}
     <header class="masthead">
-        <div class="container position-relative">
+        <div class="container position-relative letra-formulario">
             <h2>Editar curso</h2>
             <form action="{% url 'editar_curso' curso.id %}" method="POST">
                 <div class="campo">
@@ -18,7 +18,7 @@
                         {{mi_formulario.camada}}
                     </div> 
                     <div class="campo">       
-                        <button type="submit" class="btn btn-success btn-sm">Enviar</button>
+                        <button type="submit" class="btn btn-info btn-sm">Aplicar</button>
                     </div>
                 </div>    
             </form>

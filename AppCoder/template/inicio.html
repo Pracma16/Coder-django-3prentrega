@@ -4,20 +4,29 @@
 {% block contenido %}
    
    <div class="container">
-        <div class="row">
-            <div class="col-12  col-md-4">
-                <div class="card">
+       
+            <div class="fila-perfil margen-lados" >
+                <div class="card col-4">
                     <img src="{% static 'AppCoder/assets/img/testimonials-2.jpg' %}"/>
-                    <div class="card-body">
-                        <h5 class="card-title">{{usuario}}</h5>
-                        <p class="card-text">Me gusto mucho el curso</p>
-                        <a class="btn btn-danger" href="">Enviar mensaje</a>
-                    </div>
                 </div>
-            
+                <div class="bloque-perfil">
+                    <h5 class="card-title">{{usuario}}</h5>
+                    <p class="card-text letra-formulario">Me gusto mucho el curso</p>
+                    
+                    <div class="fila-perfil">
+                        <a class="btn btn-secondary" href="">Enviar mensaje</a>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button class="btn border-info btn-dark" type="submit">logout</button>
+                        </form>
+                        <a href="{% url 'EditarPerfil' %}" class="btn btn-info">Editar</a>
+                    </div>
+                    
+                </div>
+                
             </div>
-        </div>
+       
     </div>
-    <a href="" class="btn btn-danger">LogOut</a>
+    
 
 {% endblock %}

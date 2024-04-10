@@ -7,16 +7,21 @@
 
     {% comment %} Tarjetas {% endcomment %}
     <main class="contenedor-tarjetas">
+        <div class="campo letra-formulario">
+            <h1>Profesores</h1>
+        </div>
+        
         <div class="container-lg">
+          
             <div class="row align-items-start">
-
+                
                 <div class="card w-25 mb-3">
                     <img src="{% static 'AppCoder/assets/img/Profe_front_end.jpg' %}"/>
                     <div class="card-body">
                         <h5 class="card-title">Daniel Suarez</h5>
                         <h6 class="card-title">Profesor Front end</h6>
-                        <p class="card-text">Experto en desarrollo de interfaces de usuario con HTML, CSS y JavaScript. Especializado en diseño web responsivo y frameworks como React y Angular.</p>
-                        <a class="btn btn-danger" href="">Ver</a>
+                        {% comment %} <p class="card-text">Experto en desarrollo de interfaces de usuario con HTML, CSS y JavaScript. Especializado en diseño web responsivo y frameworks como React y Angular.</p> {% endcomment %}
+                        <a class="btn btn-info" href="">Ver</a>
                     </div>
                 </div>    
             
@@ -26,8 +31,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Sofia Vera</h5>
                         <h6 class="card-title">Profesora Back end</h6>
-                        <p class="card-text">Soy experto en desarrollo de sistemas robustos con Python, Java o Node.js. Especializado en arquitectura de software, bases de datos, diseño de APIs.</p>
-                        <a class="btn btn-danger" href="">Ver</a>
+                        {% comment %} <p class="card-text">Soy experto en desarrollo de sistemas robustos con Python, Java o Node.js. Especializado en arquitectura de software, bases de datos, diseño de APIs.</p> {% endcomment %}
+                        <a class="btn btn-info" href="">Ver</a>
                     </div>
                 </div>
             
@@ -36,28 +41,56 @@
                     <div class="card-body">
                         <h5 class="card-title">Eduardo Diaz</h5>
                         <h6 class="card-title">Profesor de diseño</h6>
-                        <p class="card-text">Creativo y visionario, con experiencia en diseño web y de interfaces de usuario. Especializado en herramientas como canva,  photoshop e  illustrator.</p>
-                        <a class="btn btn-danger" href="">Ver</a>
+                        {% comment %} <p class="card-text">Creativo y visionario, con experiencia en diseño web y de interfaces de usuario. Especializado en herramientas como canva,  photoshop e  illustrator.</p> {% endcomment %}
+                        <a class="btn btn-info" href="">Ver</a>
                     </div>
                 </div>    
                     
+                {% comment %} <div class="card w-25 mb-3">
+                    <img src="{% static 'AppCoder/assets/img/Profe_diseño.jpg' %}"/>
+                    <div class="card-body">
+                        <h5 class="card-title">Eduardo Diaz</h5>
+                        <h6 class="card-title">Profesor de diseño</h6>
+                        <p class="card-text" id="texto-oculto" style="display: none;">Creativo y visionario, con experiencia en diseño web y de interfaces de usuario. Especializado en herramientas como Canva, Photoshop e Illustrator.</p>
+                        <a class="btn btn-info" href="#" id="boton-ver">Ver</a>
+                    </div>
+                </div>
+                
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        var botonVer = document.getElementById("boton-ver");
+                        var textoOculto = document.getElementById("texto-oculto");
+                
+                        botonVer.addEventListener("click", function() {
+                            if (textoOculto.style.display === "none") {
+                                textoOculto.style.display = "block";
+                                botonVer.innerText = "Ocultar";
+                            } else {
+                                textoOculto.style.display = "none";
+                                botonVer.innerText = "Ver";
+                            }
+                        });
+                    });
+                </script> {% endcomment %}
+                
                 <div class="card w-25 mb-3">
                     <img src="{% static 'AppCoder/assets/img/Profe_lengua.jpg' %}"/>
                     <div class="card-body">
                         <h5 class="card-title">Carlos Rivera</h5>
                         <h6 class="card-title">Profesor de Lenguajes</h6>
-                        <p class="card-text">Experto en diversos lenguajes como Python, Java y JavaScript. Capaz de enseñar conceptos fundamentales de programación y resolver problemas complejos.</p>
-                        <a class="btn btn-danger" href="">Ver</a>
+                        {% comment %} <p class="card-text">Experto en diversos lenguajes como Python, Java y JavaScript. Capaz de enseñar conceptos fundamentales de programación y resolver problemas complejos.</p> {% endcomment %}
+                        <a class="btn btn-info" href="">Ver</a>
                     </div>
                 </div>  
-
             </div>  
         </div>
     </main>
 
+   
     {% comment %} Formulario {% endcomment %}
-    <div class="container position-relative">
-        <h1>Ingreso de Datos de Profesores</h1>
+    <div class="container position-relative letra-formulario" >
+
+        <h2>Agregar un nuevo profesor</h2>
         <form action="{% url 'alta_profesores' %}" method="POST">
             {% csrf_token %}
             <div class="campo">
@@ -74,19 +107,24 @@
                     <p>Email</p>
                     <input type="email" name="email" required>
                 </div><br>
-                <div class="botones_act">
-                    <div>
-                        <button type="submit" class="btn btn-success btn-sm">Guardar Profesor</button><br>
-                    </div>
-                    
-                    <div>
-                            <a href="{% url 'ver_profesores' %}" class="btn btn-info btn-sm">Profesores ok</a>
-                    </div>
-                    
-                </div><br>
+                <div class="campo">
+                    <button type="submit" class="btn btn-dark border-info  text-info btn-sm">Guardar Profesor</button><br>
+                </div>
+                
+                <br>
+                
             </div>                        
         </form>
+       
+    
     </div>
+
+    <div class="campo">
+        <h4 class="letra-formulario">Profesores habilitados</h4>
+        <a href="{% url 'ver_profesores' %}" class="btn btn-dark border text-info border-info rounded btn-sm">Profesores Asignados</a>
+    </div>
+
+        <br>
 
    
 {% endblock %}

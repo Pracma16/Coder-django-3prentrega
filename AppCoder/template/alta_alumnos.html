@@ -5,6 +5,9 @@
 {% block contenido %}
 
     <main class="contenedor-tarjetas">
+        <div class="campo letra-formulario">
+            <h1>Alumnos</h1>
+        </div>
         <div class="container-lg">
             <div class="row align-items-start">
                 
@@ -54,8 +57,8 @@
     </main>
 
     {% comment %} formulario {% endcomment %}{% comment %} Tarjetas {% endcomment %}
-    <div class="container position-relative ">
-        <h1>Ingreso de Datos de Alumnos</h1>
+    <div class="container position-relative letra-formulario">
+        <h1>Agregar un nuevo alumno</h1>
         <form action="{% url 'alta_alumnos' %}" method="POST">
             {% csrf_token %}
             <div class="campo">
@@ -73,17 +76,18 @@
                     <input type="email" name="email" required>
                 </div><br>
                 <div class="botones_act">
-                    <div>
-                        <button type="submit" class="btn btn-success btn-sm">Guardar Alumno</button>
+                    <div class="campo">
+                        <button type="submit" class="btn btn-dark border-info text-info btn-sm">Guardar Alumno</button>
                     </div>
-                    <div>
-                        <a href="{% url 'ver_alumnos' %}" class="btn btn-info btn-sm">Alumnos ok</a>
-                    </div>
+                   
                 </div><br>
             </div>                        
         </form>
     </div>
-   
+    <div class="campo " >
+        <h3  class="letra-formulario">Aqui estan los alumnos inscritos </h3>
+        <a href="{% url 'ver_alumnos' %}" class="btn btn-dark border text-info border-info rounded btn-sm">Alumnos inscritos</a>
+    </div><br>
 
 {% endblock %}
 

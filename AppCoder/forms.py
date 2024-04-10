@@ -1,5 +1,7 @@
 from django import forms
 from .models import Usuario
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
 class Curso_formulario(forms.Form):
@@ -33,4 +35,13 @@ class RegistroForm(forms.ModelForm):
         contraseña_confirmar = cleaned_data.get('contraseña_confirmar')
         if contraseña != contraseña_confirmar:
             raise forms.ValidationError('Las contraseñas no coinciden.')
-    
+
+
+class UserEditForm(UserCreationForm):
+    email = forms.EmailField(label="Modificar")
+    password1 = forms.CharField(label="Contraseña" , widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Repetir la contraseña" , widget=forms.PasswordInput)
+    class Meta:
+        model = User
+        fields = ['email','password1','password2']
+        help_text = {k:"" for k in fields}    

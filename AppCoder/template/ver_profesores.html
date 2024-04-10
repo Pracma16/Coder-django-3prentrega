@@ -5,18 +5,20 @@
 {% block contenido %}
 
     {% comment %} Tabla de datos {% endcomment %}
-    <div class="container">
-        <div class="campo">
+    <div class="container letra-formulario">
+        <div class="campo " >
             <h1>PROFESORES</h1>
         </div>
         <a href="{% url 'alta_profesores' %}" class="btn btn-info btn-sm">Agregar profesor</a>
-        <table class="table">
+        <table class="table table-striped table-dark">
             <thead>
                 <tr>
                     <th>id</th>
                     <th>nombre</th>
                     <th>asignatura</th>
                     <th>email</th>
+                    <th></th>
+                    <th></th>
                 </tr>            
             </thead>
             <tbody>
@@ -26,10 +28,12 @@
                     <td>{{profesor.nombre}}</td>
                     <td>{{profesor.asignatura}}</td>
                     <td>{{profesor.email}}</td>
+                    <td><a href="{% url 'editar_profesor' profesor.id %}" class="btn text-info btn-sm" >Editar</a></td>
+                    <td><a href="{% url 'elimina_profesor' profesor.id %}" class="btn text-danger btn-sm">Borrar</a></td>
                 </tr>
                 {% endfor %}  
             </tbody>
         </table>
-    </div>
+    </div>  
 
 {% endblock %}
