@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -127,9 +128,11 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',  # Backend de autenticación por defecto
 ]
 
-LOGIN_REDIRECT_URL = 'padre'  # Por ejemplo, 'padre' según tu configuración de URL
+#LOGIN_REDIRECT_URL = 'padre'  # Por ejemplo, 'padre' según tu configuración de URL
 
-LOGOUT_REDIRECT_URL = 'login' # Por ejemplo, 'inicio' según tu configuración de URL
+#LOGOUT_REDIRECT_URL = 'login' # Por ejemplo, 'inicio' según tu configuración de URL
 LOGIN_URL = 'login'  # Por ejemplo, 'login' según tu configuración de URL
-LOGOUT_URL = 'logout'  # Por ejemplo, 'logout' según tu configuración de URL
+#LOGOUT_URL = 'logout'  # Por ejemplo, 'logout' según tu configuración de URL
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

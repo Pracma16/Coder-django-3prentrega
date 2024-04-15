@@ -40,7 +40,7 @@
             </div>
         </div>
         
-
+        {% if request.user.is_authenticated %}
         <div class="container">
             <h1 class="text-xl-center title margen-lados letra-formulario">Cursos</h2>
             <a href="alta_curso" class="btn btn-info btn-sm">Nuevo curso</a>
@@ -61,14 +61,15 @@
                         <td> {{n.id}}</td>
                         <td>{{n.nombre}}</td>
                         <td>{{n.camada}}</td>
-                        <td><a href="{% url 'editar_curso' n.id %}" class="btn text-info btn-sm" >Editar</a></td>
-                        <td><a href="{% url 'elimina_curso' n.id %}" class="btn text-danger btn-sm">Borrar</a></td>
+                      
+                        <td><a href="{% url 'editar_curso' n.id %}" class="btn text-info btn-sm" >Editar</a> </td>
+                        <td><a href="{% url 'elimina_curso' n.id %}" class="btn text-danger btn-sm">Borrar</a></td>{% endif %}
                     </tr>
-                    {% endfor %}  
+                    
                 </tbody>
             </table>
         </div>
-        
+        {% endif %}
     </section>
 {% endblock %}
         

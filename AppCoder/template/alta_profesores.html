@@ -86,7 +86,7 @@
         </div>
     </main>
 
-   
+    {% if  request.user.is_authenticated %}
     {% comment %} Formulario {% endcomment %}
     <div class="container position-relative letra-formulario" >
 
@@ -125,7 +125,7 @@
     </div>
 
         <br>
-
+    {% endif %}
    
 {% endblock %}
       

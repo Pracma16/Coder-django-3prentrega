@@ -55,7 +55,7 @@
             </div>  
         </div>
     </main>
-
+    {% if  request.user.is_authenticated %}
     {% comment %} formulario {% endcomment %}{% comment %} Tarjetas {% endcomment %}
     <div class="container position-relative letra-formulario">
         <h1>Agregar un nuevo alumno</h1>
@@ -88,6 +88,7 @@
         <h3  class="letra-formulario">Aqui estan los alumnos inscritos </h3>
         <a href="{% url 'ver_alumnos' %}" class="btn btn-dark border text-info border-info rounded btn-sm">Alumnos inscritos</a>
     </div><br>
+    {% endif %}
 
 {% endblock %}
 

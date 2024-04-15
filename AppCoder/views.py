@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect 
-from AppCoder.models import Curso, Usuario, Alumnos, Profesores
+from AppCoder.models import Curso, Usuario, Alumnos, Profesores, Avatar
 from django.http import HttpResponse
 from django.template import loader
 from AppCoder.forms import *
 from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.views import LogoutView
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -54,7 +56,7 @@ def editar_alumno(request , id):
 
 
 #Profesores
-
+@login_required
 def ver_profesores(request):
     profesores = Profesores.objects.all()
     return render(request, "ver_profesores.html", {"profesores": profesores})
@@ -97,7 +99,10 @@ def editar_profesor(request , id):
 
 #Inicio
 def inicio(request):
-    return render(request, "padre.html")
+    avatar = None
+    if request.user.is_authenticated:
+        avatar = Avatar.objects.filter(user=request.user).first()
+    return render(request, "padre.html", {"avatar": avatar})
 
 #Cursos
 
@@ -107,12 +112,11 @@ def alta_curso(request,nombre):
     texto = f"Se guardo en la BD el curso: {curso.nombre} {curso.camada}"
     return HttpResponse(texto)
 
+
 def ver_cursos(request):
     cursos = Curso.objects.all()
-    dicc = {"cursos": cursos}
-    plantilla = loader.get_template("cursos.html")
-    documento = plantilla.render(dicc)
-    return HttpResponse(documento)
+    return render(request, "cursos.html", {"cursos": cursos})
+
 
 def curso_formulario(request):
     if request.method == "POST":
@@ -137,7 +141,7 @@ def buscar(request):
     else:
         return HttpResponse("Ingrese el nombre del curso")   
     
-    
+@login_required    
 def elimina_curso(request , id):
     curso = Curso.objects.get(id=id).delete()     
 
@@ -145,7 +149,7 @@ def elimina_curso(request , id):
     
     return render(request , "cursos.html" , {"cursos":curso})
 
-
+@login_required
 def editar_curso(request , id):
     curso = Curso.objects.get(id=id)
     if request.method == "POST":
@@ -187,58 +191,31 @@ def login_request(request):
             contra = form.cleaned_data.get("password")
             user = authenticate(username=usuario , password=contra)
             if user is not None:
-                login(request , user )
-                return render( request , "inicio.html" , {"mensaje":f"Bienvenido/a {usuario}", "ususario":usuario})
+                login(request , user )  
+                avatares = Avatar.objects.filter(user=request.user.id)
+                return render( request , "inicio.html" , {"url":avatares[0].imagen.url})
             else:
-                return HttpResponse(f"Usuario no encontrado")
-        else:
-            return HttpResponse(f"FORM INCORRECTO {form}")
+                return HttpResponse(f"FORM INCORRECTO {form}")
 
     form = AuthenticationForm()
     return render( request , "login.html" , {"form":form})
 
 
-
-
-
-# def login_request(request):
-#     if request.method == "POST":
-#         form = AuthenticationForm(request, data=request.POST)
-#         if form.is_valid():
-#             usuario = form.cleaned_data.get("username")
-#             contra = form.cleaned_data.get("password")
-#             user = authenticate(username=usuario , password=contra)
-#             if user is not None:
-#                 login(request , user )
-#                 return render( request , "inicio.html" , {"mensaje":f"Bienvenido/a {usuario}", "usuario":usuario})
-#             else:
-#                 return HttpResponse(f"Usuario o contraseña incorrectos")
-#         else:
-#             return HttpResponse(f"Formulario incorrecto")
-
-#     form = AuthenticationForm()
-#     return render(request , "login.html" , {"form":form})
-
-
-
-
-
-
-
-
-
-
-
-
 def logout_request(request):
-    logout(request)
-    return redirect('/')
+    return LogoutView.as_view(template_name='logout.html')(request)
 
 
 def editarPerfil(request):
     usuario = request.user
     if request.method == "POST":
-        pass
+        mi_formulario = UserEditForm(request.POST)
+        if mi_formulario.is_valid():
+            informacion = mi_formulario.cleaned_data
+            usuario.email = informacion["email"]
+            password = informacion["password1"]
+            usuario.set_password(password)
+            usuario.save()
+            return render(request , "inicio.html")
     else:
         miFormulario = UserEditForm(initial={"email":usuario.email})
     

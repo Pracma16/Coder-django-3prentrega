@@ -2,12 +2,16 @@
 {% load static %}
 
 {% block contenido %}
-    <div class="container-fluid">
-        <h2>Gracias vuelva pronto</h2>
-        <a href="{% url 'inicio' %}" class="btn btn-primary" >Volver</a>
+    <div class=" container-fluid margen-lados">
+            
+        <div class="campo letra-formulario ">
+            <img class="imagen-robot" src="static/AppCoder/assets/img/robot-logo.png" alt=""  >
+            <h1>Gracias vuelva pronto</h1>
+        </div>
+        <div class="campo">
+            <a href="{% url 'inicio' %}" class="menu_principal" >volver</a>
+        </div>
+        
     </div>
-
-    
-   
    
 {% endblock %}

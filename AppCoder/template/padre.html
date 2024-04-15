@@ -22,11 +22,44 @@
         <nav class="navbar navbar-light bg-secondary static-top ">
             <div class="container">
                 <a class="menu_principal" href="{% url 'inicio' %}">Inicio</a>
-                <a class="menu_principal" href="{% url 'ver_cursos' %}">Cursos</a>
-                <a class="menu_principal" href="{% url 'alta_profesores' %}">Profesores</a>
-                <a class="menu_principal" href="{% url 'alta_alumnos' %}">Alumnos</a>
-                <a class="menu_principal" href="{% url 'Register' %}">Registrarse</a>
-                <a class="menu_principal" href="{% url 'login' %}">Iniciar sesión</a>
+                {% if request.user.is_authenticated %}
+                    <a class="menu_principal" href="{% url 'ver_cursos' %}">Cursos</a>
+                {% endif %}
+                    <a class="menu_principal" href="{% url 'alta_profesores' %}">Profesores</a>
+                    <a class="menu_principal" href="{% url 'alta_alumnos' %}">Alumnos</a>
+                    <a class="menu_principal" href="{% url 'Register' %}">Registrarse</a>
+                {% if not request.user.is_authenticated %}
+                    <a class="menu_principal" href="{% url 'login' %}">Iniciar sesión</a>
+                {% endif %}
+               
+                {% if  request.user.is_authenticated %}
+                <div class="campo" >
+                    {% if avatar %}
+                        <img src="{{ avatar.imagen.url }}" alt="Avatar" width="50px" height="50px">
+                        <p class="letra-formulario">Bienvenido, {{user.username}}</p>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button class="menu_principal" type="submit">Salir</button>
+                        </form>
+                    {% else %}
+                    <img src="robot-logo3.png" alt="Avatar por defecto" width="50px" height="50px">
+                    {% endif %}
+                    
+                {% comment %} {% if  request.user.is_authenticated %}
+                    <div class="campo" >
+                        <img src="{{ url }}" alt="" width="50px" height="50px"> 
+                        <p>Bienvenido, {{user.username}}</p>
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button class="menu_principal" type="submit">Salir</button>
+                        </form>    
+                    </div>
+                {% endif %} {% endcomment %}
+
+                </div>
+                {% endif %}
+
+
             </div>
         </nav>
         
