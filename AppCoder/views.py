@@ -1,14 +1,13 @@
 from django.shortcuts import render, redirect 
-from AppCoder.models import Curso, Usuario, Alumnos, Profesores, Avatar
+from AppCoder.models import Curso, Alumnos, Profesores, Avatar
 from django.http import HttpResponse
-from django.template import loader
 from AppCoder.forms import *
 from django.urls import reverse
 from django.contrib.auth.forms import AuthenticationForm , UserCreationForm
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.decorators import login_required
-
+from .forms import AvatarForm  
 
 
 #Alumnos
@@ -51,8 +50,6 @@ def editar_alumno(request , id):
     else:
         el_formulario = Alumnos_formulario(initial={"nombre":alumno.nombre , "edad":alumno.edad , "email":alumno.email})
     return render( request , "editar_alumno.html" , {"el_formulario": el_formulario , "alumno":alumno})
-
-
 
 
 #Profesores
@@ -126,7 +123,6 @@ def curso_formulario(request):
             curso =Curso(nombre=datos["nombre"], camada=datos["camada"])
             curso.save()
             return render(request , "formulario.html")
-
     return render(request , "formulario.html")
 
 
@@ -144,44 +140,40 @@ def buscar(request):
 @login_required    
 def elimina_curso(request , id):
     curso = Curso.objects.get(id=id).delete()     
-
     curso = Curso.objects.all()
-    
     return render(request , "cursos.html" , {"cursos":curso})
 
 @login_required
 def editar_curso(request , id):
     curso = Curso.objects.get(id=id)
     if request.method == "POST":
-        
         mi_formulario = Curso_formulario( request.POST )
         if mi_formulario.is_valid():
             datos = mi_formulario.cleaned_data
             curso.nombre = datos["nombre"]
             curso.camada = datos["camada"]
             curso.save()
-            
             curso = Curso.objects.all()
             return redirect(reverse('ver_cursos'))
-        
     else:
         mi_formulario = Curso_formulario(initial={"nombre":curso.nombre , "camada":curso.camada})
     return render( request , "editar_curso.html" , {"mi_formulario": mi_formulario , "curso":curso})
 
 
 def register(request):
-    
     if request.method == "POST":
         form = UserCreationForm(request.POST)
-
         if form.is_valid():
-            form.save()
-            return HttpResponse("Usuario creado")
-
+            user = form.save()
+            avatar = Avatar.objects.create(user=user, imagen_de_perfil='avatares/icono.png')
+            login(request, user)
+            return redirect('perfil')
     else:
         form = UserCreationForm()
     return render(request , "registro.html" , {"form":form})
 
+
+#LOGIN
 
 def login_request(request):
     if request.method == "POST":
@@ -192,18 +184,32 @@ def login_request(request):
             user = authenticate(username=usuario , password=contra)
             if user is not None:
                 login(request , user )  
-                avatares = Avatar.objects.filter(user=request.user.id)
-                return render( request , "inicio.html" , {"url":avatares[0].imagen.url})
+                avatar = Avatar.objects.filter(user=request.user.id).first()
+                if avatar:
+                    imagen_url = avatar.imagen_de_perfil.url
+                    return render( request , "padre.html" , {"imagen_url": imagen_url})
+                else:
+                    error_message = "No se encontró avatar para este usuario."
+                    return render(request, "login.html", {"form": form, "error_message": error_message})
             else:
-                return HttpResponse(f"FORM INCORRECTO {form}")
+                error_message = "Credenciales incorrectas. Por favor, intenta de nuevo."
+                return render(request, "login.html", {"form": form, "error_message": error_message})
+        else:
+            error_message = "Datos incorrectos. Por favor, verifica tus credenciales."
+            return render(request, "login.html", {"form": form, "error_message": error_message})
+    else:
+        form = AuthenticationForm()
+        return render(request, "login.html", {"form": form})
 
-    form = AuthenticationForm()
-    return render( request , "login.html" , {"form":form})
 
+
+#LOGOUT
 
 def logout_request(request):
     return LogoutView.as_view(template_name='logout.html')(request)
 
+
+#PERFIL
 
 def editarPerfil(request):
     usuario = request.user
@@ -211,18 +217,45 @@ def editarPerfil(request):
         mi_formulario = UserEditForm(request.POST)
         if mi_formulario.is_valid():
             informacion = mi_formulario.cleaned_data
-            usuario.email = informacion["email"]
+            usuario = informacion["usuario"]
             password = informacion["password1"]
             usuario.set_password(password)
             usuario.save()
-            return render(request , "inicio.html")
+            return render(request , "perfil.html")
     else:
-        miFormulario = UserEditForm(initial={"email":usuario.email})
+        miFormulario = UserEditForm(initial={"usuario":usuario})
     
     return render( request , "editar_perfil.html", {"miFormulario":miFormulario, "usuario":usuario})
 
 
+def perfil_usuario(request):
+    usuario = request.user
+    avatar = Avatar.objects.filter(user=usuario).first() 
+    imagen_perfil_url = None
+    if avatar and avatar.imagen_de_perfil:
+        imagen_perfil_url = avatar.imagen_de_perfil.url
+    return render(request, 'perfil.html', {'imagen_perfil_url': imagen_perfil_url, "usuario": usuario})
+
+
+@login_required
+def cargar_imagen(request):
+    avatares = Avatar.objects.filter(user=request.user)
+    if avatares.exists():
+        avatar = avatares.first()
+    else:
+        avatar = Avatar.objects.create(user=request.user)
+    if request.method == 'POST':
+        form = AvatarForm(request.POST, request.FILES, instance=avatar)
+        if form.is_valid():
+            form.save()
+            return redirect('perfil')
+    else:
+        form = AvatarForm(instance=avatar)
+    return render(request, 'cargar_imagen.html', {'form': form})
+
+#ABOUT
 
 def nosotros(request):
     return render(request, "nosotros.html" )
+
 

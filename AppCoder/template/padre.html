@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         {% load static %}
         <meta charset="utf-8" />
@@ -8,63 +8,45 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Cursagia</title>
-        <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" type="text/css" />
-        <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'AppCoder/css/styles.css' %} " rel="stylesheet" />
     </head>
     <body>
-        <!-- Navigation-->
         <nav class="navbar navbar-light bg-secondary static-top ">
             <div class="container">
                 <a class="menu_principal" href="{% url 'inicio' %}">Inicio</a>
-                {% if request.user.is_authenticated %}
                     <a class="menu_principal" href="{% url 'ver_cursos' %}">Cursos</a>
-                {% endif %}
                     <a class="menu_principal" href="{% url 'alta_profesores' %}">Profesores</a>
                     <a class="menu_principal" href="{% url 'alta_alumnos' %}">Alumnos</a>
                     <a class="menu_principal" href="{% url 'Register' %}">Registrarse</a>
                 {% if not request.user.is_authenticated %}
                     <a class="menu_principal" href="{% url 'login' %}">Iniciar sesión</a>
                 {% endif %}
-               
-                {% if  request.user.is_authenticated %}
-                <div class="campo" >
-                    {% if avatar %}
-                        <img src="{{ avatar.imagen.url }}" alt="Avatar" width="50px" height="50px">
-                        <p class="letra-formulario">Bienvenido, {{user.username}}</p>
-                        <form method="post" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <button class="menu_principal" type="submit">Salir</button>
-                        </form>
-                    {% else %}
-                    <img src="robot-logo3.png" alt="Avatar por defecto" width="50px" height="50px">
-                    {% endif %}
-                    
-                {% comment %} {% if  request.user.is_authenticated %}
-                    <div class="campo" >
-                        <img src="{{ url }}" alt="" width="50px" height="50px"> 
-                        <p>Bienvenido, {{user.username}}</p>
-                        <form method="post" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <button class="menu_principal" type="submit">Salir</button>
-                        </form>    
-                    </div>
-                {% endif %} {% endcomment %}
-
-                </div>
+                {% if request.user.is_authenticated %}
+                    <a class="menu_principal" href="{% url 'perfil' %}">Perfil</a>
                 {% endif %}
-
-
+               
+                {% if request.user.is_authenticated %}                   
+                    <p class="letra-formulario">{{request.user.username}}</p>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="btn btn-dark text-info btn-sm" type="submit">Salir</button>
+                    </form>
+                    {% if avatar%}
+                    <div class="campo">                       
+                        <img src="{{ avatar.imagen_de_perfil.url }}" alt="Avatar" style="border: solid 0.5px #71d0d7; border-radius: 50%; " width="50px" height="50px">
+                    {% else %}
+                        <img src="static/AppCoder/assets/img/robot-repair.png" alt="Avatar" style="border: solid 0.5px #71d0d7; border-radius: 50%; " width="50px" height="50px">   
+                    </div>
+                     {% endif %}            
+                {% endif %}
             </div>
         </nav>
         
         {% block contenido %}
-        
+       
         <header class="masthead">
             <div class="container position-relative">
                 <h1 class="text-center" style="color:white">Cursagia</h1>
@@ -73,14 +55,8 @@
             </div>
         </header>
 
-       
-        
         {% endblock %}
-    
-        <!--Fin de contenido-->
-
-        <!-- Footer-->
-    
+        
         <footer class="footer bg-secondary ">
             <div class="container">
                 <div class="row-footer">
@@ -112,14 +88,8 @@
                 </div>
             </div>
         </footer>
-        <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
         <script src="{% static 'AppCoder/js/scripts.js' %}"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </body>
 </html>

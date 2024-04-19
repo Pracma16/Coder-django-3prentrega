@@ -2,16 +2,34 @@
 {% load static %}
 
 {% block contenido %}  
-  
-    {% if cursos %}
-        <ul>
-        {% for curso in cursos %}
-            <li>Nombre: {{curso.nombre}}</li>
-            <li>Camada: {{curso.camada}}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No se encontraron cursos con ese nombre</p>
-    {% endif %}
+<header class="masthead">
+    
+    <div class="container position-relative letra-formulario" >
+            
+            
+            {% if cursos %}
+            <h2>Curso disponible</h2>
+            <div class="campo">
+                <ul>
+                {% for curso in cursos %}
+                    <li>Nombre: {{curso.nombre}}</li>
+                    <li>Camada: {{curso.camada}}</li>
+                {% endfor %}
+                </ul>
+                <img src="static/AppCoder/assets/img/robot-curso.png" alt="">
+            </div>
+           
+        {% else %}
+
+            <p>No se encontraron cursos con ese nombre</p>
+            <img src="static/AppCoder/assets/img/robot-repair.png" alt="">
+            <div class="campo">
+                <a href="{% url 'ver_cursos' %}" class="menu_principal" >volver</a>
+            </div>
+        {% endif %}
+    </div>
+</header>
+
+    
 
 {% endblock %}

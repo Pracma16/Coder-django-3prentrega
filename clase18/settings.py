@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'clase18.urls'
@@ -56,10 +57,11 @@ ROOT_URLCONF = 'clase18.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["C:/Users/lenovo/Desktop/--/PYTHON CODERHOUSE/clase18/AppCoder/template/"],
+        'DIRS': ["C:/Users/lenovo/Desktop/Coder-django-3prentrega/AppCoder/template/"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'AppCoder.context_processors.avatar_context',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -129,10 +131,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 #LOGIN_REDIRECT_URL = 'padre'  # Por ejemplo, 'padre' según tu configuración de URL
-
 #LOGOUT_REDIRECT_URL = 'login' # Por ejemplo, 'inicio' según tu configuración de URL
-LOGIN_URL = 'login'  # Por ejemplo, 'login' según tu configuración de URL
 #LOGOUT_URL = 'logout'  # Por ejemplo, 'logout' según tu configuración de URL
+LOGIN_URL = 'login'# Por ejemplo, 'login' según tu configuración de URL
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

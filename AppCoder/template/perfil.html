@@ -1,0 +1,45 @@
+{% extends "padre.html" %}
+{% load static %}
+
+{% block contenido %}
+
+
+<div class="fila-perfil margen-lados perfilar">
+
+
+    <div class="campo letra-formulario" >
+        <div class="campo">
+            {% if imagen_perfil_url %}
+            <img src="{{ imagen_perfil_url }}" style="border: solid 3.5px #71d0d7; box-shadow: 0px 0px 30px 7px rgba(83,128,126,1); border-radius: 50%; padding: 2%; " alt="Imagen de perfil">
+            {% else %}
+            <p>No hay imagen de perfil disponible.</p>
+            {% endif %}
+        </div>
+       
+
+        <div class="margen-lados" >
+            <div class="bloque-perfil">
+                <div class="campo">
+                    <h5 >{{usuario}}</h5>
+                </div>
+                
+                <div class="fila-perfil">
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                    </form>
+                    <a href="{% url 'EditarPerfil' %}" class="btn btn-dark text-info btn-sm">Editar contraseña</a>
+                    <a href="{% url 'cargar_imagen' %}" class="btn btn-info btn-sm">Editar imagen</a>
+                </div> 
+            </div>
+        </div>
+    </div>
+    <div class="perfilar letra-formulario" >
+        <h6>Tu perfil programador</h6>
+        <p>Un programador full stack es un profesional versátil en el desarrollo web que posee habilidades tanto en el desarrollo del frontend como del backend de aplicaciones. Este individuo es capaz de trabajar en todas las capas de una aplicación, desde la interfaz de usuario hasta la lógica de negocio y la gestión de bases de datos. Su amplio conocimiento le permite crear aplicaciones web completas de principio a fin, manejando tanto la experiencia del usuario como la funcionalidad del sistema. Un programador full stack es adaptable, capaz de aprender nuevas tecnologías rápidamente y resolver problemas complejos de manera eficiente. Su capacidad para trabajar en diferentes áreas del desarrollo web lo hace valioso para equipos de proyectos pequeños y medianos, donde puede tomar la responsabilidad de varios aspectos del proceso de desarrollo.</p>
+    </div>
+    
+</div>
+    
+  
+
+{% endblock %} 

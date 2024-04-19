@@ -5,7 +5,7 @@
         
 {% block contenido %}
 
-    {% comment %} Tarjetas {% endcomment %}
+   
     <main class="contenedor-tarjetas">
         <div class="campo letra-formulario">
             <h1>Profesores</h1>
@@ -86,7 +86,7 @@
         </div>
     </main>
 
-    {% if  request.user.is_authenticated %}
+    {% if request.user.is_authenticated %}
     {% comment %} Formulario {% endcomment %}
     <div class="container position-relative letra-formulario" >
 

@@ -63,9 +63,10 @@
                         <td>{{n.camada}}</td>
                       
                         <td><a href="{% url 'editar_curso' n.id %}" class="btn text-info btn-sm" >Editar</a> </td>
-                        <td><a href="{% url 'elimina_curso' n.id %}" class="btn text-danger btn-sm">Borrar</a></td>{% endif %}
+                        <td><a href="{% url 'elimina_curso' n.id %}" class="btn text-danger btn-sm">Borrar</a></td>
+                       
                     </tr>
-                    
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
