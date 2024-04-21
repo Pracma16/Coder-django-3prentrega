@@ -20,7 +20,9 @@
                     <a class="menu_principal" href="{% url 'ver_cursos' %}">Cursos</a>
                     <a class="menu_principal" href="{% url 'alta_profesores' %}">Profesores</a>
                     <a class="menu_principal" href="{% url 'alta_alumnos' %}">Alumnos</a>
+                {% if not request.user.is_authenticated %}    
                     <a class="menu_principal" href="{% url 'Register' %}">Registrarse</a>
+                {% endif %}    
                 {% if not request.user.is_authenticated %}
                     <a class="menu_principal" href="{% url 'login' %}">Iniciar sesión</a>
                 {% endif %}
@@ -29,18 +31,18 @@
                 {% endif %}
                
                 {% if request.user.is_authenticated %}                   
-                    <p class="letra-formulario">{{request.user.username}}</p>
+                    <p class="footer-texto" >{{request.user.username}}</p>
                     <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <button class="btn btn-dark text-info btn-sm" type="submit">Salir</button>
                     </form>
-                    {% if avatar%}
-                    <div class="campo">                       
-                        <img src="{{ avatar.imagen_de_perfil.url }}" alt="Avatar" style="border: solid 0.5px #71d0d7; border-radius: 50%; " width="50px" height="50px">
-                    {% else %}
-                        <img src="static/AppCoder/assets/img/robot-repair.png" alt="Avatar" style="border: solid 0.5px #71d0d7; border-radius: 50%; " width="50px" height="50px">   
+                    <div class="campo">
+                        {% if avatar.imagen_de_perfil %}
+                            <img src="{{ avatar.imagen_de_perfil.url }}" alt="Avatar" style="border: solid 0.5px #71d0d7; border-radius: 50%; " width="50px" height="50px">
+                        {% else %}
+                            <p>No hay imagen de perfil disponible.</p>
+                        {% endif %}
                     </div>
-                     {% endif %}            
                 {% endif %}
             </div>
         </nav>

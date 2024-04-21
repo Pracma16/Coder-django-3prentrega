@@ -184,13 +184,10 @@ def login_request(request):
             user = authenticate(username=usuario , password=contra)
             if user is not None:
                 login(request , user )  
-                avatar = Avatar.objects.filter(user=request.user.id).first()
-                if avatar:
-                    imagen_url = avatar.imagen_de_perfil.url
-                    return render( request , "padre.html" , {"imagen_url": imagen_url})
-                else:
-                    error_message = "No se encontró avatar para este usuario."
-                    return render(request, "login.html", {"form": form, "error_message": error_message})
+                avatar = Avatar.objects.filter(user=user).first()
+                if not avatar:
+                    avatar = Avatar.objects.create(user=user, imagen_de_perfil='avatares/icono.png')
+                return render(request , "padre.html" , {"avatar": avatar})
             else:
                 error_message = "Credenciales incorrectas. Por favor, intenta de nuevo."
                 return render(request, "login.html", {"form": form, "error_message": error_message})
@@ -201,6 +198,8 @@ def login_request(request):
         form = AuthenticationForm()
         return render(request, "login.html", {"form": form})
 
+  
+    return HttpResponse("Error: Método de solicitud no permitido.")
 
 
 #LOGOUT
