@@ -173,6 +173,7 @@ def register(request):
     return render(request , "registro.html" , {"form":form})
 
 
+
 #LOGIN
 
 def login_request(request):
@@ -213,18 +214,17 @@ def logout_request(request):
 def editarPerfil(request):
     usuario = request.user
     if request.method == "POST":
-        mi_formulario = UserEditForm(request.POST)
+        mi_formulario = UserEditForm(request.POST, instance=usuario)
         if mi_formulario.is_valid():
-            informacion = mi_formulario.cleaned_data
-            usuario = informacion["usuario"]
-            password = informacion["password1"]
+            usuario = mi_formulario.save(commit=False)
+            password = mi_formulario.cleaned_data["password1"]
             usuario.set_password(password)
             usuario.save()
-            return render(request , "perfil.html")
+            return redirect("inicio")
     else:
-        miFormulario = UserEditForm(initial={"usuario":usuario})
+        miFormulario = UserEditForm(instance=usuario)
     
-    return render( request , "editar_perfil.html", {"miFormulario":miFormulario, "usuario":usuario})
+    return render(request, "editar_perfil.html", {"miFormulario": miFormulario, "usuario": usuario})
 
 
 def perfil_usuario(request):

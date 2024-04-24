@@ -41,7 +41,7 @@ class Avatar(models.Model):
         if self.imagen_de_perfil:
             return self.imagen_de_perfil.url
         else:
-            return 'static/AppCoder/assets/img/robot-logo3.png'
+            return 'static/AppCoder/assets/img/icono.png'
     
 
     def save(self, *args, **kwargs):

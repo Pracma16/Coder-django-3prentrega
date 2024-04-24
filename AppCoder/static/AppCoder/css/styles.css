@@ -10985,6 +10985,9 @@ footer.footer {
 .margen-lados{
   margin: 50px 0 20px 0;
 }
+.margen-lados-card{
+  margin: 25px 0 20px 0;
+}
 
 .fila-perfil{
   display: flex;
@@ -11013,4 +11016,10 @@ footer.footer {
 
 .perfilar{
   padding-inline: 5%;
+}
+
+.mini-baner{
+  position: absolute; 
+  border-radius: 25px; 
+  width: 270px; 
 }
